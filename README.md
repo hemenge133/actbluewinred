@@ -16,6 +16,7 @@ Current investigation is limited to aggregation of individual donations with the
 
 ## Issues
 - Some records have 5 digit zipcodes and others have 9 digit zipcodes, resulting in multiple records in the final dataframe for the same person (potentially). I could use the google_maps.geocode API to combine zipcodes if they are equivalent, or just truncate the fully specified zipcodes.
+    - For example: The 1st and 7th most frequent donor is MAKOWSKI, BRUCE. Both entries have a 48017 zipcode.
 
 ## Notebook output
 
