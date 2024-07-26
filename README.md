@@ -14,6 +14,9 @@ Current investigation is limited to aggregation of individual donations with the
 - The most frequent donor has made in excess of 20,000 individual donations in approximately 1.333 years or ~40 times per day on average
 - More insights to come
 
+## Issues
+- Some records have 5 digit zipcodes and others have 9 digit zipcodes, resulting in multiple records in the final dataframe for the same person (potentially). I could use the google_maps.geocode API to combine zipcodes if they are equivalent, or just truncate the fully specified zipcodes.
+
 ## Notebook output
 
 ```python
