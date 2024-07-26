@@ -1,5 +1,16 @@
 # Investigating Individual Contributions to ActBlue and WinRed
-[Download 2023-2024 Individual Contributions file from FEC](https://www.fec.gov/files/bulk-downloads/2024/indiv24.zip)
+Current investigation is limited to aggregation of individual donations with the same name and zipcode. The top 100 donators by number of contributions are listed.
+
+## Quickstart / Steps to reproduce
+1. Clone repo `git clone https://github.com/hemenge133/actbluewinred.git`
+2. [Download 2023-2024 Individual Contributions file from FEC](https://www.fec.gov/files/bulk-downloads/2024/indiv24.zip)
+3. Extract indiv24.zip in the same directory as the repo
+4. Install dependencies
+    - [python3](https://www.python.org/downloads/)
+    - `pip install jupyter pandas`
+5. Open Notebook file: `actblue.ipynb`
+
+## Notebook output
 
 ```python
 import pandas as pd
