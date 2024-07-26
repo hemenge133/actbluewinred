@@ -10,6 +10,10 @@ Current investigation is limited to aggregation of individual donations with the
     - `pip install jupyter pandas`
 5. Open Notebook file: `actblue.ipynb`
 
+## Summary of findings
+- The most frequent donor has made in excess of 20,000 individual donations in approximately 1.333 years or ~40 times per day on average
+- More insights to come
+
 ## Notebook output
 
 ```python
