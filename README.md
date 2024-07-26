@@ -227,183 +227,6 @@ combined_df.head()
 
 
 ```python
-combined_df.head()
-```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>ID</th>
-      <th>Field1</th>
-      <th>Field2</th>
-      <th>Field3</th>
-      <th>Field4</th>
-      <th>Field5</th>
-      <th>Field6</th>
-      <th>Name</th>
-      <th>City</th>
-      <th>State</th>
-      <th>...</th>
-      <th>Employer</th>
-      <th>Occupation</th>
-      <th>Date</th>
-      <th>Amount</th>
-      <th>OtherID</th>
-      <th>Field16</th>
-      <th>Field17</th>
-      <th>Field18</th>
-      <th>Field19</th>
-      <th>Field20</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>C00079681</td>
-      <td>N</td>
-      <td>M6</td>
-      <td>P</td>
-      <td>202306129581782820</td>
-      <td>15</td>
-      <td>IND</td>
-      <td>GODLEWSKI, KIM</td>
-      <td>FENTON</td>
-      <td>MI</td>
-      <td>...</td>
-      <td>IPS EQUIPMENT</td>
-      <td>VICE PRESIDENT</td>
-      <td>5282023.0</td>
-      <td>100</td>
-      <td>NaN</td>
-      <td>2425123</td>
-      <td>1707004</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>4061220231749193699</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>C00409730</td>
-      <td>N</td>
-      <td>M6</td>
-      <td>P</td>
-      <td>202306129582118675</td>
-      <td>15E</td>
-      <td>IND</td>
-      <td>ROBERTS, PHILIP</td>
-      <td>SEATTLE</td>
-      <td>WA</td>
-      <td>...</td>
-      <td>RYAN, SWANSON &amp; CLEVELAND, PLLC</td>
-      <td>ATTORNEY</td>
-      <td>5282023.0</td>
-      <td>500</td>
-      <td>C00699470</td>
-      <td>15444361</td>
-      <td>1707040</td>
-      <td>NaN</td>
-      <td>* EARMARKED CONTRIBUTION: SEE BELOW</td>
-      <td>4061320231749244130</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>C00409730</td>
-      <td>N</td>
-      <td>M6</td>
-      <td>P</td>
-      <td>202306129582118670</td>
-      <td>15E</td>
-      <td>IND</td>
-      <td>GRUNDSTEIN, LEON</td>
-      <td>MERCER ISLAND</td>
-      <td>WA</td>
-      <td>...</td>
-      <td>GENCARE, INC</td>
-      <td>SENIOR LIVING OWNER, DEVELOPER, OPERAT</td>
-      <td>5282023.0</td>
-      <td>500</td>
-      <td>C00699470</td>
-      <td>15444363</td>
-      <td>1707040</td>
-      <td>NaN</td>
-      <td>* EARMARKED CONTRIBUTION: SEE BELOW</td>
-      <td>4061320231749244117</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>C00409730</td>
-      <td>N</td>
-      <td>M6</td>
-      <td>P</td>
-      <td>202306129582118676</td>
-      <td>15E</td>
-      <td>IND</td>
-      <td>SCHOCKEN, JOSEPH L.</td>
-      <td>SEATTLE</td>
-      <td>WA</td>
-      <td>...</td>
-      <td>BROADMARK CAPITAL</td>
-      <td>PRESIDENT</td>
-      <td>5282023.0</td>
-      <td>5000</td>
-      <td>C00699470</td>
-      <td>15444362</td>
-      <td>1707040</td>
-      <td>NaN</td>
-      <td>* EARMARKED CONTRIBUTION: SEE BELOW</td>
-      <td>4061320231749244134</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>C00063164</td>
-      <td>N</td>
-      <td>M6</td>
-      <td>P</td>
-      <td>202306139582145211</td>
-      <td>15</td>
-      <td>IND</td>
-      <td>MCMILLAN, S TODD</td>
-      <td>COLORADO SPRINGS</td>
-      <td>CO</td>
-      <td>...</td>
-      <td>MCDONALD'S</td>
-      <td>LICENSEE</td>
-      <td>5282023.0</td>
-      <td>200</td>
-      <td>NaN</td>
-      <td>17411206</td>
-      <td>1707152</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>4061320231749248513</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 21 columns</p>
-</div>
-
-
-
-
-```python
 pd.set_option('display.max_columns', None)
 combined_df.head()
 ```
@@ -590,6 +413,24 @@ final_df = combined_df.groupby('PrimaryKey').agg(
     TotalAmount=('Amount', 'sum')
 ).reset_index()
 ```
+
+
+```python
+# Issue: Some entries include middle name or title, or change use a zip+4 code in place of a zip code
+filtered_df = final_df.loc[final_df['PrimaryKey'].str.startswith('MAKOWSKI, BRUCE')]
+print(filtered_df)
+```
+
+                                       PrimaryKey  RecordCount  TotalAmount
+    1682585             MAKOWSKI, BRUCE_480171279        20092        60654
+    1682583                 MAKOWSKI, BRUCE_48017        11038        31870
+    1682579      MAKOWSKI, BRUCE EDWARD_480171279         2146         6945
+    1682578  MAKOWSKI, BRUCE EDWARD MR._480171279          342         3004
+    1682584             MAKOWSKI, BRUCE_480171227          230         1028
+    1682580         MAKOWSKI, BRUCE MR._480171279           94          583
+    1682582                 MAKOWSKI, BRUCE_47985            5            4
+    1682581              MAKOWSKI, BRUCE MR_48017            4            6
+
 
 
 ```python
@@ -1230,8 +1071,3 @@ final_df.head(100)
 </div>
 
 
-
-
-```python
-
-```
