@@ -12,7 +12,7 @@ Current investigation is limited to aggregation of individual donation records w
 
 ## Summary of findings
 - The most frequent donor has made in excess of 20,000 individual donations in approximately 1.333 years or ~40 times per day on average
-- The most amount of transactions by a donor in a single day is 4,441. 2,876 have a positive value (see below issue with negative/zero valued transactions).
+- The most amount of transactions by a donor in a single day is 4,441. 2,876 have a positive value (see below issue with negative/zero valued transactions). This equates to 20-30 seconds on average between each transaction, depending if you count all transactions as valid or just the postive transactions.
 - More insights to come
 
 ## Issues
