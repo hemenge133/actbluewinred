@@ -19,7 +19,7 @@ Current investigation is limited to aggregation of individual donation records w
 - Some records have 5 digit zipcodes and others have 9 digit "zip+4" zipcodes, potentially resulting in multiple records in the final dataframe for the same person. I could use the google_maps.geocode API to combine zipcodes if they are within a specified distance, or just truncate the fully specified zipcodes.
     - For example: The 1st and 7th most frequent donor is MAKOWSKI, BRUCE. Both entries have a 48017 zipcode.
     - Solution: For now I am truncating 9 digit zipcodes to 5, and only taking the first 2 words of the name.
-- There are many zero or negative valued transactions, ostensibly for chargebacks or voided transactions. Whether they should be counted will be considered. The majority appear to be positive.
+- There are many zero or negative valued transactions, ostensibly for chargebacks or voided transactions. These also potentially refer to non-cash donations where the value of the gift was adjusted after recording an initial estimated value. Whether they should be counted will be considered. The majority appear to be positively valued.
 
 ## Notebook output
 
