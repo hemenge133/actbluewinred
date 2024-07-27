@@ -1,5 +1,5 @@
 # Investigating Individual Contributions to ActBlue and WinRed
-Current investigation is limited to aggregation of individual donation records with the same name and zipcode. The top donators by total number of transactions and by number of transactions in a single day are listed.
+Current investigation is limited to aggregation of individual donation records with the same name and zipcode. The top donators by total number of transactions and by number of transactions in a single day are listed. CSVs are provided for viewing more results than are available in the notebook output. The csvs only include individuals with record counts over 100 to save bandwidth.
 
 ## Quickstart / Steps to reproduce
 1. Clone repo `git clone https://github.com/hemenge133/actbluewinred.git`
@@ -19,9 +19,10 @@ Current investigation is limited to aggregation of individual donation records w
 - Some records have 5 digit zipcodes and others have 9 digit "zip+4" zipcodes, potentially resulting in multiple records in the final dataframe for the same person. I could use the google_maps.geocode API to combine zipcodes if they are within a specified distance, or just truncate the fully specified zipcodes.
     - For example: The 1st and 7th most frequent donor is MAKOWSKI, BRUCE. Both entries have a 48017 zipcode.
     - Solution: For now I am truncating 9 digit zipcodes to 5, and only taking the first 2 words of the name.
-- There are many zero or negative valued transactions, ostensibly for chargebacks or voided transactions. Whether they should be counted will be considered. The majority appear to be positive at a glance.
+- There are many zero or negative valued transactions, ostensibly for chargebacks or voided transactions. Whether they should be counted will be considered. The majority appear to be positive.
 
 ## Notebook output
+
 ```python
 import pandas as pd
 import os
@@ -84,7 +85,7 @@ combined_df.head()
       <th>Name</th>
       <th>City</th>
       <th>State</th>
-      <th>...</th>
+      <th>Zip</th>
       <th>Employer</th>
       <th>Occupation</th>
       <th>Date</th>
@@ -110,7 +111,7 @@ combined_df.head()
       <td>GODLEWSKI, KIM</td>
       <td>FENTON</td>
       <td>MI</td>
-      <td>...</td>
+      <td>484309630</td>
       <td>IPS EQUIPMENT</td>
       <td>VICE PRESIDENT</td>
       <td>5282023.0</td>
@@ -134,7 +135,7 @@ combined_df.head()
       <td>ROBERTS, PHILIP</td>
       <td>SEATTLE</td>
       <td>WA</td>
-      <td>...</td>
+      <td>981092846</td>
       <td>RYAN, SWANSON &amp; CLEVELAND, PLLC</td>
       <td>ATTORNEY</td>
       <td>5282023.0</td>
@@ -158,7 +159,7 @@ combined_df.head()
       <td>GRUNDSTEIN, LEON</td>
       <td>MERCER ISLAND</td>
       <td>WA</td>
-      <td>...</td>
+      <td>980402445</td>
       <td>GENCARE, INC</td>
       <td>SENIOR LIVING OWNER, DEVELOPER, OPERAT</td>
       <td>5282023.0</td>
@@ -182,7 +183,7 @@ combined_df.head()
       <td>SCHOCKEN, JOSEPH L.</td>
       <td>SEATTLE</td>
       <td>WA</td>
-      <td>...</td>
+      <td>981014129</td>
       <td>BROADMARK CAPITAL</td>
       <td>PRESIDENT</td>
       <td>5282023.0</td>
@@ -206,7 +207,7 @@ combined_df.head()
       <td>MCMILLAN, S TODD</td>
       <td>COLORADO SPRINGS</td>
       <td>CO</td>
-      <td>...</td>
+      <td>809623583</td>
       <td>MCDONALD'S</td>
       <td>LICENSEE</td>
       <td>5282023.0</td>
@@ -220,7 +221,6 @@ combined_df.head()
     </tr>
   </tbody>
 </table>
-<p>5 rows × 21 columns</p>
 </div>
 
 
@@ -236,6 +236,9 @@ final_df = combined_df.groupby('PrimaryKey').agg(
     TotalAmount=('Amount', 'sum')
 ).reset_index()
 final_df = final_df.sort_values(by='RecordCount', ascending=False)
+# output to file
+# final_df[final_df['RecordCount'] > 100].to_csv('raw_data_grouped_by_name_and_zip.csv', index=False)
+
 final_df.head(10)
 ```
 
@@ -372,6 +375,8 @@ corrected_final_df = combined_df.groupby(['PrimaryKey']).agg(
 
 # Dataframe without zip+4 specificity and without middle names or titles
 corrected_final_df = corrected_final_df.sort_values(by='RecordCount', ascending=False)
+# output to file
+# corrected_final_df[corrected_final_df['RecordCount'] > 100].to_csv('corrected_data_grouped_by_name_and_zip.csv', index=False)
 pd.set_option('display.max_rows', None)
 corrected_final_df.head(10)
 ```
@@ -480,6 +485,8 @@ daily_corrected_final_df = combined_df.groupby(['PrimaryKey', 'Date']).agg(
     TotalAmount=('Amount', 'sum')
 ).reset_index()
 daily_corrected_final_df = daily_corrected_final_df.sort_values(by='RecordCount', ascending=False)
+# output to file
+# daily_corrected_final_df[daily_corrected_final_df['RecordCount'] > 100].to_csv('daily_corrected_data_grouped_by_name_and_zip.csv', index=False)
 ```
 
 
