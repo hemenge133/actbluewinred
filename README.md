@@ -11,7 +11,8 @@ Current investigation is limited to aggregation of individual donation records w
 5. Open Notebook file: `actblue.ipynb`
 
 ## Summary of findings
-- The most frequent donor has made in excess of 20,000 individual donations in approximately 1.333 years or ~40 times per day on average
+- The most frequent donor has made in excess of 20,000 individual donations in approximately 1.333 years or ~40 times per day on average.
+- If we make the assumption that First name, Last name, and 5 digit zipcode are uniquely identifying, the highest is 33,946 or an average of ~70 transactions per day, every day during this period.
 - The most amount of transactions by a donor in a single day is 4,441. 2,876 have a positive value (see below issue with negative/zero valued transactions). This equates to 20-30 seconds on average between each transaction, depending if you count all transactions as valid or just the postive transactions.
 - More insights to come
 
@@ -19,7 +20,7 @@ Current investigation is limited to aggregation of individual donation records w
 - Some records have 5 digit zipcodes and others have 9 digit "zip+4" zipcodes, potentially resulting in multiple records in the final dataframe for the same person. I could use the google_maps.geocode API to combine zipcodes if they are within a specified distance, or just truncate the fully specified zipcodes.
     - For example: The 1st and 7th most frequent donor is MAKOWSKI, BRUCE. Both entries have a 48017 zipcode.
     - Solution: For now I am truncating 9 digit zipcodes to 5, and only taking the first 2 words of the name.
-- There are many zero or negative valued transactions, ostensibly for chargebacks or voided transactions. These also potentially refer to non-cash donations where the value of the gift was adjusted after recording an initial estimated value. Whether they should be counted will be considered. The majority appear to be positively valued.
+- There are many zero or negative valued transactions, ostensibly for chargebacks or voided transactions. These also potentially refer to non-cash donations where the value of the gift was adjusted after recording an initial estimated value. Whether they should be counted will be considered. The majority appear to be positively valued. The sheer number of transactions makes it pretty unlikely this is only due to chargebacks or non-cash adjustments but I will be looking into this more.
 
 ## Notebook output
 
